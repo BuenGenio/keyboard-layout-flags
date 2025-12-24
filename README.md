@@ -14,8 +14,8 @@ A GNOME Shell extension that adds Unicode ISO country flags to the keyboard layo
 
 1. Copy the extension to your local extensions directory:
    ```bash
-   mkdir -p ~/.local/share/gnome-shell/extensions/keyboard-layout-flags@gnome-keyboard-flags
-   cp * ~/.local/share/gnome-shell/extensions/keyboard-layout-flags@gnome-keyboard-flags/
+   mkdir -p ~/.local/share/gnome-shell/extensions/keyboard-layout-flags@keyboard-layout-flags
+   cp * ~/.local/share/gnome-shell/extensions/keyboard-layout-flags@keyboard-layout-flags/
    ```
 
 2. Restart GNOME Shell:
@@ -24,7 +24,7 @@ A GNOME Shell extension that adds Unicode ISO country flags to the keyboard layo
 
 3. Enable the extension:
    ```bash
-   gnome-extensions enable keyboard-layout-flags@gnome-keyboard-flags
+   gnome-extensions enable keyboard-layout-flags@keyboard-layout-flags
    ```
 
 ## Usage
@@ -39,7 +39,7 @@ To test the extension during development:
 
 ```bash
 # Create a symbolic link from the project to the extensions directory
-ln -s /home/buengenio/Projects/gnome-keyboard-flags ~/.local/share/gnome-shell/extensions/keyboard-layout-flags@gnome-keyboard-flags
+ln -s /home/buengenio/Projects/keyboard-layout-flags ~/.local/share/gnome-shell/extensions/keyboard-layout-flags@keyboard-layout-flags
 
 # Watch logs for debugging
 journalctl -f -o cat /usr/bin/gnome-shell
