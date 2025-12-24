@@ -1,3 +1,5 @@
+[![Buy Me a Coffee](https://cdn.buymeacoffee.com/buttons/default-orange.png)]([www.buymeacoffee.com](https://buymeacoffee.com/buengenio))
+
 # Keyboard Layout Flags
 
 A GNOME Shell extension that adds Unicode ISO country flags to the keyboard layout switcher (OSD) when you press Super+Space.
