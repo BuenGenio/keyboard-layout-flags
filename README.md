@@ -1,4 +1,6 @@
-[![Buy Me a Coffee](https://cdn.buymeacoffee.com/buttons/default-orange.png)]([www.buymeacoffee.com](https://buymeacoffee.com/buengenio))
+<a href="https://buymeacoffee.com/buengenio"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png"/></a>
+
+Thanks!
 
 # Keyboard Layout Flags
 
