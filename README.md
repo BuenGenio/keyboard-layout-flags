@@ -29,7 +29,7 @@ A GNOME Shell extension that adds Unicode ISO country flags to the keyboard layo
 
 ## Usage
 
-Press `Super+Space` to open the keyboard layout switcher, and you'll see country flags displayed next to each layout name (e.g., 🇺🇸 English, 🇺🇦 Ukrainian, 🇪🇸 Spanish, 🇷🇺 Russian).
+Press `Super+Space` to open the keyboard layout switcher, and you'll see country flags displayed next to each layout name (e.g., 🇺🇸 English, 🇺🇦 Ukrainian, 🇪🇸 Spanish).
 
 The flags automatically reorder to match GNOME's most recently used layout order.
 
@@ -49,7 +49,7 @@ journalctl -f -o cat /usr/bin/gnome-shell
 
 The extension currently supports 40+ country/region codes including:
 - Americas: US, CA, MX, BR, AR
-- Europe: GB, DE, FR, ES, IT, RU, UA, PL, NL, SE, NO, FI, DK, CZ, AT, CH, BE, GR, HU, RO
+- Europe: GB, DE, FR, ES, IT, UA, PL, NL, SE, NO, FI, DK, CZ, AT, CH, BE, GR, HU, RO
 - Asia: CN, JP, KR, IN, IL, TR
 - And more!
 
