@@ -11,6 +11,8 @@ A GNOME Shell extension that adds Unicode ISO country flags to the keyboard layo
 - Displays country flags next to layout names in the keyboard switcher popup
 - Supports 40+ country/region codes
 
+![Screenshot](LayoutSwitcher.png)
+
 ## Installation
 
 1. Copy the extension to your local extensions directory:
