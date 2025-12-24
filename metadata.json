@@ -1,0 +1,38 @@
+{
+  "uuid": "keyboard-layout-flags@buengenio",
+  "name": "Keyboard Layout Flags",
+  "description": "Adds Unicode country flags next to layout names in the keyboard switcher (Super+Space)",
+  "shell-version": [
+    "49"
+  ],
+  "version": 1,
+  "url": "https://github.com/buengenio/keyboard-layout-flags",
+  "author": "BuenGenio",
+  "author-email": "pi.yudaka@anthill.hk"
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
