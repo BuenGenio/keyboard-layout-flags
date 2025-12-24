@@ -5,10 +5,7 @@ A GNOME Shell extension that adds Unicode ISO country flags to the keyboard layo
 ## Features
 
 - Displays country flags next to layout names in the keyboard switcher popup
-- Automatically updates flag order to match most recently used layouts
 - Supports 40+ country/region codes
-- Compatible with GNOME 49
-- Clean, non-intrusive implementation
 
 ## Installation
 
@@ -32,14 +29,6 @@ A GNOME Shell extension that adds Unicode ISO country flags to the keyboard layo
 Press `Super+Space` to open the keyboard layout switcher, and you'll see country flags displayed next to each layout name (e.g., 🇺🇸 English, 🇺🇦 Ukrainian, 🇪🇸 Spanish).
 
 The flags automatically reorder to match GNOME's most recently used layout order.
-
-## Development
-
-To test the extension during development:
-
-```bash
-# Create a symbolic link from the project to the extensions directory
-ln -s /home/buengenio/Projects/keyboard-layout-flags ~/.local/share/gnome-shell/extensions/keyboard-layout-flags@keyboard-layout-flags
 
 # Watch logs for debugging
 journalctl -f -o cat /usr/bin/gnome-shell
