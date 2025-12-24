@@ -2,7 +2,7 @@
 
 # Installation script for Keyboard Layout Flags extension
 
-EXTENSION_UUID="keyboard-layout-flags@gnome-keyboard-flags"
+EXTENSION_UUID="keyboard-layout-flags@buengenio"
 EXTENSION_DIR="$HOME/.local/share/gnome-shell/extensions/$EXTENSION_UUID"
 PROJECT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 

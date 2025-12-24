@@ -33,18 +33,18 @@ const FLAG_MAP = {
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/buengenio/gnome-keyboard-flags.git
-   cd gnome-keyboard-flags
+   git clone https://github.com/buengenio/keyboard-layout-flags.git
+   cd keyboard-layout-flags
    ```
 
 2. Create a symlink for development:
    ```bash
-   ln -s $(pwd) ~/.local/share/gnome-shell/extensions/keyboard-layout-flags@gnome-keyboard-flags
+   ln -s $(pwd) ~/.local/share/gnome-shell/extensions/keyboard-layout-flags@buengenio
    ```
 
 3. Enable the extension:
    ```bash
-   gnome-extensions enable keyboard-layout-flags@gnome-keyboard-flags
+   gnome-extensions enable keyboard-layout-flags@buengenio
    ```
 
 4. Monitor logs for debugging:
