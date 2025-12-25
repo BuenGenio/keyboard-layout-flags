@@ -5,10 +5,13 @@
   "shell-version": [
     "49"
   ],
-  "version": 1,
+  "gettext-domain": "keyboard-layout-flags",
+  "version": 4,
   "url": "https://github.com/buengenio/keyboard-layout-flags",
   "author": "BuenGenio",
-  "author-email": "pi.yudaka@anthill.hk"
+  "donations": {
+    "buymeacoffee": "buengenio"
+  }
 }
 
 

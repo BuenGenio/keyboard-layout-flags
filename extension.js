@@ -51,120 +51,82 @@ export default class KeyboardLayoutFlagsExtension extends Extension {
     constructor(metadata) {
         super(metadata);
         this._settings = null;
-        this._pollTimeout = null;
-        this._lastLayoutKey = null;
         this._originalSwitcherShow = null;
     }
 
     enable() {
-        try {
-            // Get settings for layout info
-            this._settings = new Gio.Settings({
-                schema_id: 'org.gnome.desktop.input-sources'
-            });
-            
-            // Hook into the SwitcherPopup to modify labels when shown
-            this._hookSwitcherPopup();
-            
-            // Initialize last layout
-            GLib.timeout_add(GLib.PRIORITY_DEFAULT, 100, () => {
-                const mruSources = this._settings.get_value('mru-sources').deep_unpack();
-                if (mruSources && mruSources.length > 0) {
-                    const [type, id] = mruSources[0];
-                    this._lastLayoutKey = `${type}:${id}`;
-                }
-                return GLib.SOURCE_REMOVE;
-            });
-        } catch (e) {
-            console.error('KeyboardLayoutFlags: Error enabling extension:', e);
-        }
+        this._settings = new Gio.Settings({
+            schema_id: 'org.gnome.desktop.input-sources'
+        });
+        
+        this._hookSwitcherPopup();
     }
 
     _hookSwitcherPopup() {
-        try {
-            // Hook into SwitcherPopup's show method
-            this._originalSwitcherShow = SwitcherPopup.SwitcherPopup.prototype.show;
-            
-            const extension = this;
-            SwitcherPopup.SwitcherPopup.prototype.show = function(backward, binding, mask) {
-                // Call original show
-                const result = extension._originalSwitcherShow.call(this, backward, binding, mask);
-                
-                // Add flags to the items
-                extension._addFlagsToSwitcher(this);
-                
-                return result;
-            };
-        } catch (e) {
-            console.error('KeyboardLayoutFlags: Error hooking switcher:', e);
-        }
+        this._originalSwitcherShow = SwitcherPopup.SwitcherPopup.prototype.show;
+        
+        const extension = this;
+        SwitcherPopup.SwitcherPopup.prototype.show = function(backward, binding, mask) {
+            const result = extension._originalSwitcherShow.call(this, backward, binding, mask);
+            extension._addFlagsToSwitcher(this);
+            return result;
+        };
     }
 
     _addFlagsToSwitcher(switcher) {
-        try {
-            // Get sources arrays
-            const sources = this._settings.get_value('sources').deep_unpack();
-            // Use mru-sources for the correct display order (most recently used first)
-            const mruSources = this._settings.get_value('mru-sources').deep_unpack();
+        const sources = this._settings.get_value('sources').deep_unpack();
+        const mruSources = this._settings.get_value('mru-sources').deep_unpack();
+        
+        if (!switcher._items || switcher._items.length === 0) {
+            return;
+        }
+        
+        // Skip if item count doesn't match (probably window/app switcher, not layout switcher)
+        if (switcher._items.length !== sources.length) {
+            return;
+        }
+        
+        if (switcher._switcherList) {
+            const listChildren = switcher._switcherList.get_children();
             
-            if (!switcher._items || switcher._items.length === 0) {
-                return;
-            }
-            
-            // Skip if item count doesn't match sources (it's probably window/app switcher)
-            if (switcher._items.length !== sources.length) {
-                return;
-            }
-            
-            // Access the switcher list to find layout buttons
-            if (switcher._switcherList) {
-                const listChildren = switcher._switcherList.get_children();
-                
-                // Look for the ScrollView which contains the layout buttons
-                listChildren.forEach((child) => {
-                    if (child.constructor.name === 'St_ScrollView') {
-                        // Get the child of the ScrollView (usually a BoxLayout)
-                        const scrollChild = child.get_child();
-                        if (scrollChild) {
-                            const buttons = scrollChild.get_children();
+            listChildren.forEach((child) => {
+                if (child.constructor.name === 'St_ScrollView') {
+                    const scrollChild = child.get_child();
+                    if (scrollChild) {
+                        const buttons = scrollChild.get_children();
+                        
+                        // Use mru-sources to match the display order (most recently used first)
+                        buttons.forEach((button, index) => {
+                            if (index >= mruSources.length) return;
                             
-                            buttons.forEach((button, index) => {
-                                // Use mru-sources to match the display order
-                                if (index >= mruSources.length) return;
-                                
-                                const [type, id] = mruSources[index];
-                                const countryCode = getCountryCode(id);
-                                const flag = countryCode ? getFlagEmoji(countryCode) : null;
-                                
-                                if (flag) {
-                                    const label = this._findLabelRecursive(button);
-                                    if (label) {
-                                        const currentText = label.get_text();
-                                        // Remove any existing flags first
-                                        const cleanText = currentText.replace(/[\u{1F1E6}-\u{1F1FF}]{2}/gu, '').trim();
-                                        const newText = `${flag} ${cleanText}`;
-                                        label.set_text(newText);
-                                    }
+                            const [type, id] = mruSources[index];
+                            const countryCode = getCountryCode(id);
+                            const flag = countryCode ? getFlagEmoji(countryCode) : null;
+                            
+                            if (flag) {
+                                const label = this._findLabelRecursive(button);
+                                if (label) {
+                                    const currentText = label.get_text();
+                                    // Strip any existing flag emojis before adding new one
+                                    const cleanText = currentText.replace(/[\u{1F1E6}-\u{1F1FF}]{2}/gu, '').trim();
+                                    const newText = `${flag} ${cleanText}`;
+                                    label.set_text(newText);
                                 }
-                            });
-                        }
+                            }
+                        });
                     }
-                });
-            }
-        } catch (e) {
-            console.error('KeyboardLayoutFlags: Error adding flags to switcher:', e);
+                }
+            });
         }
     }
 
     _findLabelRecursive(actor) {
         if (!actor) return null;
         
-        // Check if this actor is a label
         if (actor instanceof St.Label) {
             return actor;
         }
         
-        // Check if it has children
         if (typeof actor.get_children === 'function') {
             const children = actor.get_children();
             for (const child of children) {
@@ -177,16 +139,11 @@ export default class KeyboardLayoutFlagsExtension extends Extension {
     }
 
     disable() {
-        try {
-            // Restore original SwitcherPopup show method
-            if (this._originalSwitcherShow) {
-                SwitcherPopup.SwitcherPopup.prototype.show = this._originalSwitcherShow;
-                this._originalSwitcherShow = null;
-            }
-            
-            this._settings = null;
-        } catch (e) {
-            console.error('KeyboardLayoutFlags: Error disabling extension:', e);
+        if (this._originalSwitcherShow) {
+            SwitcherPopup.SwitcherPopup.prototype.show = this._originalSwitcherShow;
+            this._originalSwitcherShow = null;
         }
+        
+        this._settings = null;
     }
 }
